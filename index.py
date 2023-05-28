@@ -66,3 +66,70 @@ class Solution:
     
         return cost
 
+# Given an array of strings words and an integer k, return the k most frequent strings.
+
+# Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+# Example 1:
+
+# Input: words = ["i","love","leetcode","i","love","coding"], k = 2
+# Output: ["i","love"]
+# Explanation: "i" and "love" are the two most frequent words.
+# Note that "i" comes before "love" due to a lower alphabetical order.
+
+# https://leetcode.com/problems/top-k-frequent-words/description/
+
+from collections import Counter
+import heapq
+
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+          counter = Counter(words)
+          heap = []
+
+          for key,val in counter.items():
+            heapq.heappush(heap,(-val, key))
+
+          result = []
+
+          while len(result) < k: result.append(heapq.heappop(heap)[1])
+
+          return result
+
+          
+
+# Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
+
+# The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)2 + (y1 - y2)2).
+
+# You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in).
+
+# Example 1:
+
+
+# Input: points = [[1,3],[-2,2]], k = 1
+# Output: [[-2,2]]
+# Explanation:
+# The distance between (1, 3) and the origin is sqrt(10).
+# The distance between (-2, 2) and the origin is sqrt(8).
+# Since sqrt(8) < sqrt(10), (-2, 2) is closer to the origin.
+# We only want the closest k = 1 points from the origin, so the answer is just [[-2,2]].
+
+# https://leetcode.com/problems/k-closest-points-to-origin/description/
+
+from collections import Counter
+import heapq
+import math
+
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        heap = []
+        ans = []
+
+        for point in points:
+            heapq.heappush(heap, (math.sqrt(point[0]**2 + point[1]**2), point))
+
+        while len(ans) < k:
+            ans.append(heapq.heappop(heap)[1])
+    
+        return ans
